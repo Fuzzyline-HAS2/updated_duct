@@ -1,0 +1,43 @@
+#include "duct.h"
+void TimerInit()
+{
+    wifi_timer_id = wifi_timer.setInterval(2000, WifiTimerFunc);
+}
+
+void TimerRun()
+{
+    cooltime_timer.run();
+    duct_close_timer.run();
+    wifi_timer.run();
+    rfid_timer.run();
+}
+
+void CooltimeTimerFunc()
+{
+    if(current_time >= cooltime){
+        pixels_line.lightColor(line_yellow);
+        pixels_round.lightColor(yellow);
+        pixels_switch.lightColor(yellow);
+
+        has2wifi.Send((String)(const char*)my["device_name"], "device_state", "activate");
+        current_time = 0;
+        duct_available = true;
+        cooltime_timer.deleteTimer(cooltime_timer_id);
+    }
+    else{
+        current_time++;
+        if(cool_time_neo_bool){
+            pixels_line.lightColor(line_red, NUMPIXELS_LINE * (cooltime - current_time) / cooltime);
+        }
+    }
+}
+
+void RfidTagTimerFunc()
+{
+    rfid_tag = false;
+}
+
+void WifiTimerFunc()
+{
+  has2wifi.Loop(DataChange);
+}

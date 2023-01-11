@@ -1,0 +1,124 @@
+#include "duct.h"
+
+/**
+ * @brief 덕트 사용시 DB에 
+ */
+void DuctTag(String tag_player){
+    if(duct_available){
+        tag_player_name = tag_player;
+        TagPlayerSend();
+        use_duct_num++;
+        CooltimeCalculation();
+        DuctOpen();
+    }
+    else{
+        CooltimeMp3();
+    }
+}
+
+void DuctOpen(bool switch_push)
+{   
+    if(duct_available || switch_push){
+        if(cooltime_timer.isEnabled(cooltime_timer_id)){
+            cooltime_timer.deleteTimer(cooltime_timer_id);
+        }
+        Mp3PlayLargeFolder(1,2);
+        switch_available = false;
+        duct_available = false;
+        pixels_line.lightColor(line_red);
+        pixels_switch.lightColor(red);
+        pixels_round.lightColor(red);
+        digitalWrite(RELAY_PIN, HIGH);
+        duct_close_timer_id = duct_close_timer.setTimeout(5000, DuctClose);
+    }
+}
+
+void DuctClose()
+{
+    digitalWrite(RELAY_PIN, LOW);
+    pixels_line.lightColor(line_red);
+    pixels_switch.lightColor(yellow);
+    switch_available = true;
+    current_time = 0;
+    has2wifi.Send((String)(const char*)my["device_name"], "device_state", "lock");
+    if(!cooltime_timer.isEnabled(cooltime_timer_id)){
+        cooltime_timer_id = cooltime_timer.setInterval(1000, CooltimeTimerFunc);
+    }
+}
+
+/**
+ * @brief 덕트 사용횟수에 따른 쿨타임 계산 함수
+ */
+void CooltimeCalculation()
+{
+    switch (use_duct_num)
+    {
+    case 1 : case 2 :
+        cooltime = cooltime_set + cooltime_add * 0;
+        break;
+    case 3 : case 4 :
+        cooltime = cooltime_set + cooltime_add * 1;
+        break;
+    case 5 : case  6:
+        cooltime = cooltime_set + cooltime_add * 2;
+        break;    
+    case 7 : case  8:
+        cooltime = cooltime_set + cooltime_add * 3;
+        break;
+    case 9 : case  10:
+        cooltime = cooltime_set + cooltime_add * 4;
+        break;    
+    default:
+        break;
+    }
+}
+
+void TagPlayerSend()
+{
+    if((String)(const char*)my["device_name"] == "BV1" || (String)(const char*)my["device_name"] == "HV1"){
+        has2wifi.Send("BV1", "tag_player", tag_player_name);
+        has2wifi.Send("HV1", "tag_player", tag_player_name);
+    }
+    else if((String)(const char*)my["device_name"] == "BV2" || (String)(const char*)my["device_name"] == "GV1"){
+        has2wifi.Send("BV2", "tag_player", tag_player_name);
+        has2wifi.Send("GV1", "tag_player", tag_player_name);
+    }
+    else if((String)(const char*)my["device_name"] == "GV2" || (String)(const char*)my["device_name"] == "FV"){
+        has2wifi.Send("FV", "tag_player", tag_player_name);
+        has2wifi.Send("GV2", "tag_player", tag_player_name);
+    }
+}
+//TODO 덕트킬 추가
+void DuctKill()
+{
+    // 가장 최근 태그한 플레이어 정보를 DB에서 가져옴
+    String kill_player = (String)(const char*)my["tag_player"];
+
+    has2wifi.Receive(kill_player);
+
+    if(kill_player.startsWith("G")){
+        if((int)tag["life_chip"] > 0){
+            Serial.println("Duct Kill!");
+
+            has2wifi.Send(kill_player, "life_chip", "-1");
+            has2wifi.Send((String)(const char*)my["device_name"], "taken_chip", "+1");
+            has2wifi.Send((String)(const char*)my["device_name"], "exp", "+130");
+
+            cool_time_neo_bool = false;
+            pixels_line.lightColor(purple);
+            pixels_round.lightColor(purple);
+            delay(500);
+            pixels_line.clear();
+            pixels_round.clear();
+            delay(500);
+            pixels_line.lightColor(purple);
+            pixels_round.lightColor(purple);
+            delay(500);
+            pixels_line.clear();
+            pixels_round.clear();
+            delay(500);
+            pixels_round.lightColor(red);
+            cool_time_neo_bool = true;
+        }
+    }
+}

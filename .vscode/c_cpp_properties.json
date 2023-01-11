@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/Fuzzy line Studio/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.5/cores/arduino/**",
+                "C:/Users/Fuzzy line Studio/AppData/Local/Arduino15/packages/esp32/hardware/esp32/2.0.4/tools/sdk/esp32/include/esp_system/include/**",
+                "C:/Users/Fuzzy line Studio/AppData/local/Arduino15/packages/esp32/hardware/esp32/2.0.4/libraries/**",
+                "C:/Users/Fuzzy line Studio/Documents/Arduino/libraries/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
