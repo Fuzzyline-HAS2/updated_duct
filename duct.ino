@@ -8,8 +8,8 @@ void DuctInit()
 {
   Serial.begin(115200);
   SensorInit();
-  has2wifi.Setup("KT_GiGA_6C64", "ed46zx1198");
-  // has2wifi.Setup();
+  // has2wifi.Setup("KT_GiGA_6C64", "ed46zx1198");
+  has2wifi.Setup();
   DataChange();
   TimerInit();
 }

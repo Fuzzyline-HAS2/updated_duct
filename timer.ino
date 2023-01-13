@@ -22,11 +22,13 @@ void CooltimeTimerFunc()
         has2wifi.Send((String)(const char*)my["device_name"], "device_state", "activate");
         current_time = 0;
         duct_available = true;
+        cool_time_neo_bool = false;
         cooltime_timer.deleteTimer(cooltime_timer_id);
     }
     else{
         current_time++;
         if(cool_time_neo_bool){
+            pixels_line.clear();
             pixels_line.lightColor(line_red, NUMPIXELS_LINE * (cooltime - current_time) / cooltime);
         }
     }

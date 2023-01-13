@@ -40,6 +40,7 @@ void DuctClose()
     pixels_switch.lightColor(yellow);
     switch_available = true;
     current_time = 0;
+    cool_time_neo_bool = true;
     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "lock");
     if(!cooltime_timer.isEnabled(cooltime_timer_id)){
         cooltime_timer_id = cooltime_timer.setInterval(1000, CooltimeTimerFunc);
@@ -98,6 +99,7 @@ void DuctKill()
 
     if(kill_player.startsWith("G")){
         if((int)tag["life_chip"] > 0){
+            duct_kill_bool = true;
             Serial.println("Duct Kill!");
 
             has2wifi.Send(kill_player, "life_chip", "-1");

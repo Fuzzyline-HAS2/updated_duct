@@ -14,7 +14,7 @@ typedef enum GameState{ setting, ready, activate } GameState;
 GameState game_state = setting;
 
 bool cool_time_neo_bool = true;
-
+bool duct_kill_bool;
 //============================ Hardware Serial ============================
 // HardwareSerial MySerial1(1); // 사용X
 HardwareSerial MySerial2(2);    // MP3
