@@ -34,7 +34,7 @@ void loop()
   EmegencyPush();
 
   if(game_state == activate){ ActivateFunc(); }
-  else{  // 세팅 모드에서는 덕트가 쿨타임 없이 열리고 닫힐 수 있음
+  else{  // 쿨타임 없이 사용(크루용) 세팅 모드 : 태그, 스위치 둘다 가능 / 레디 : 스위치만 가능 
     RfidLoop();
     if(!digitalRead(SW_PIN)){
       Serial.println("staff");

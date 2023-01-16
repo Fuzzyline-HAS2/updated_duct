@@ -52,6 +52,7 @@ void ActivateRunOnce()
 {
     game_state = activate;
 
+    // 쿨타임과 쿨타임 증가량을 DB에서 읽어 사용할 수 있음
     cooltime_set = (int)my["cool_time"];
     cooltime_add = (int)my["cool_time_add"];
 
