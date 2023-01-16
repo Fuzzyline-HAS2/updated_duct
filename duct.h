@@ -8,6 +8,9 @@ int use_duct_num;   // 덕트 사용횟수
 bool duct_available = true;  // 덕트 사용 가능 
 bool switch_available = true;
 String tag_player_name = "";
+String cur_tag_user = "";
+int tagUser_tag_num = 0;
+String tagger_name = "";
 
 typedef enum GameState{ setting, ready, activate } GameState;
 

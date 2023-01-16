@@ -43,6 +43,7 @@ void ActivateFunc()
 {
     RfidLoop();
     if(!digitalRead(SW_PIN) && switch_available) { DuctOpen(true); }
+    if(!digitalRead(EMCHECK_PIN)){ duct_kill_bool = false; }
 }
 
 /**

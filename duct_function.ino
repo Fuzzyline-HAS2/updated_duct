@@ -95,7 +95,14 @@ void DuctKill()
     // 가장 최근 태그한 플레이어 정보를 DB에서 가져옴
     String kill_player = (String)(const char*)my["tag_player"];
 
-    has2wifi.Receive(kill_player);
+    if(kill_player != cur_tag_user){
+      tagUser_tag_num = 0;
+      has2wifi.Receive(kill_player);
+      cur_tag_user = kill_player;
+    }
+    if(++tagUser_tag_num > 4){
+        cur_tag_user = "";
+    }
 
     if(kill_player.startsWith("G")){
         if((int)tag["life_chip"] > 0){
@@ -103,8 +110,8 @@ void DuctKill()
             Serial.println("Duct Kill!");
 
             has2wifi.Send(kill_player, "life_chip", "-1");
-            has2wifi.Send((String)(const char*)my["device_name"], "taken_chip", "+1");
-            has2wifi.Send((String)(const char*)my["device_name"], "exp", "+130");
+            has2wifi.Send(tagger_name, "taken_chip", "+1");
+            has2wifi.Send(tagger_name, "exp", "+130");
 
             cool_time_neo_bool = false;
             pixels_line.lightColor(purple);

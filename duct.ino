@@ -30,7 +30,6 @@ void setup()
 void loop()
 {
   TimerRun();
-
   EmegencyPush();
 
   if(game_state == activate){ ActivateFunc(); }
