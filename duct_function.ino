@@ -29,7 +29,8 @@ void DuctOpen(bool switch_push)
         pixels_switch.lightColor(red);
         pixels_round.lightColor(red);
         digitalWrite(RELAY_PIN, HIGH);
-        duct_close_timer_id = duct_close_timer.setTimeout(5000, DuctClose);
+        duct_close_timer_id = duct_close_timer.setTimeout(4000, DuctClose);
+        delay(1000);
     }
 }
 
@@ -95,21 +96,21 @@ void DuctKill()
     // 가장 최근 태그한 플레이어 정보를 DB에서 가져옴
     String kill_player = (String)(const char*)my["tag_player"];
 
-    if(kill_player != cur_tag_user){
-      tagUser_tag_num = 0;
-      has2wifi.Receive(kill_player);
-      cur_tag_user = kill_player;
-    }
-    if(++tagUser_tag_num > 4){
-        cur_tag_user = "";
-    }
+    has2wifi.Receive(kill_player);
 
     if(kill_player.startsWith("G")){
-        if((int)tag["life_chip"] > 0){
+        if((String)(const char*)tag["role"] == "player"){
             duct_kill_bool = true;
             Serial.println("Duct Kill!");
 
             has2wifi.Send(kill_player, "life_chip", "-1");
+            if((int)tag["life_chip"] > 1){
+                has2wifi.Send(kill_player, "role", "revival");
+            }
+            else if((int)tag["life_chip"] == 1){
+                has2wifi.Send(kill_player, "role", "ghost");
+            }
+
             has2wifi.Send(tagger_name, "taken_chip", "+1");
             has2wifi.Send(tagger_name, "exp", "+130");
 

@@ -57,7 +57,7 @@ void RfidLoop()
 {                                                                  
   if(!rfid_tag){ 
       rfid_tag = true;
-      rfid_timer_id = rfid_timer.setTimeout(2000, RfidTagTimerFunc);
+      rfid_timer_id = rfid_timer.setTimeout(1000, RfidTagTimerFunc);
   }
   else {return ;}
   uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };                                  // Buffer to store the returned UID
@@ -94,19 +94,12 @@ void CardChecking(uint8_t rfidData[32]) //어떤 카드가 들어왔는지 확�
 
   if(game_state == activate){
     // 1. 태그한 플레이어의 역할과 생명칩갯수, 최대생명칩갯수 등 읽어오기
-    if(tagUser != cur_tag_user){
-      tagUser_tag_num = 0;
-      has2wifi.Receive(tagUser);
-      cur_tag_user = tagUser;
-    }
-    if(++tagUser_tag_num > 4){
-        cur_tag_user = "";
-    }
+    has2wifi.Receive(tagUser);
     // 2. 술래인지, 플레이어인지 구분
     if((String)(const char*)tag["role"] == "player"){
       DuctTag(tagUser);
     }
-    else if((String)(const char*)tag["role"] == "tagger"){
+    else if((String)(const char*)tag["role"] == "tagger" && ((int)tag["taken_chip"] < (int)tag["max_taken_chip"])){
       tagger_name = tagUser;
      if(digitalRead(EMCHECK_PIN) && !duct_kill_bool){
         DuctKill();
