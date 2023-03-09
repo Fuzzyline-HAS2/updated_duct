@@ -1,15 +1,15 @@
 #include "duct.h"
 
 /**
- * @brief 덕트 사용시 DB에 
+ * @brief 덕트 사용시 동작
  */
 void DuctTag(String tag_player){
     if(duct_available){
         tag_player_name = tag_player;
-        TagPlayerSend();
         use_duct_num++;
         CooltimeCalculation();
         DuctOpen();
+        TagPlayerSend();
     }
     else{
         CooltimeMp3();
@@ -30,7 +30,6 @@ void DuctOpen(bool switch_push)
         pixels_round.lightColor(red);
         digitalWrite(RELAY_PIN, HIGH);
         duct_close_timer_id = duct_close_timer.setTimeout(4000, DuctClose);
-        delay(1000);
     }
 }
 
@@ -42,10 +41,10 @@ void DuctClose()
     switch_available = true;
     current_time = 0;
     cool_time_neo_bool = true;
-    has2wifi.Send((String)(const char*)my["device_name"], "device_state", "lock");
     if(!cooltime_timer.isEnabled(cooltime_timer_id)){
         cooltime_timer_id = cooltime_timer.setInterval(1000, CooltimeTimerFunc);
     }
+    has2wifi.Send((String)(const char*)my["device_name"], "device_state", "lock");
 }
 
 /**
@@ -103,17 +102,6 @@ void DuctKill()
             duct_kill_bool = true;
             Serial.println("Duct Kill!");
 
-            has2wifi.Send(kill_player, "life_chip", "-1");
-            if((int)tag["life_chip"] > 1){
-                has2wifi.Send(kill_player, "role", "revival");
-            }
-            else if((int)tag["life_chip"] == 1){
-                has2wifi.Send(kill_player, "role", "ghost");
-            }
-
-            has2wifi.Send(tagger_name, "taken_chip", "+1");
-            has2wifi.Send(tagger_name, "exp", "+130");
-
             cool_time_neo_bool = false;
             pixels_line.lightColor(purple);
             pixels_round.lightColor(purple);
@@ -127,7 +115,27 @@ void DuctKill()
             pixels_line.clear();
             pixels_round.clear();
             delay(500);
-            pixels_round.lightColor(red);
+            if(duct_available){
+                pixels_line.lightColor(line_yellow);
+                pixels_round.lightColor(yellow);
+                pixels_switch.lightColor(yellow);
+            }
+            else{
+                pixels_round.lightColor(red);
+                pixels_line.lightColor(line_red);
+            }
+
+            has2wifi.Send(kill_player, "life_chip", "-1");
+            if((int)tag["life_chip"] > 1){
+                has2wifi.Send(kill_player, "role", "revival");
+            }
+            else if((int)tag["life_chip"] == 1){
+                has2wifi.Send(kill_player, "role", "ghost");
+            }
+
+            has2wifi.Send(tagger_name, "taken_chip", "+1");
+            has2wifi.Send(tagger_name, "exp", "+130");
+            
             cool_time_neo_bool = true;
         }
     }
