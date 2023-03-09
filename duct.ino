@@ -1,3 +1,14 @@
+/**
+ * @file duct.ino
+ * @author YuBin Kim (dbqks56231106@gmail.com)
+ * @brief badland 덕트
+ * @version 0.0.1
+ * @date 2023-02-03
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "duct.h"
 
 //************************************************ Core1 ********************************************************************
@@ -7,9 +18,8 @@
 void DuctInit()
 {
   Serial.begin(115200);
+  has2wifi.Setup("city");
   SensorInit();
-  // has2wifi.Setup("KT_GiGA_6C64", "ed46zx1198");
-  has2wifi.Setup();
   DataChange();
   TimerInit();
 }
