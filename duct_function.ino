@@ -98,7 +98,7 @@ void DuctKill()
     has2wifi.Receive(kill_player);
 
     if(kill_player.startsWith("G")){
-        if((String)(const char*)tag["role"] == "player"){
+        if((String)(const char*)tag["role"] == "player" || (String)(const char*)tag["role"] == "revival"){
             duct_kill_bool = true;
             Serial.println("Duct Kill!");
 
