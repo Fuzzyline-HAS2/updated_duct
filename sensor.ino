@@ -179,7 +179,7 @@ void Mp3PlayLargeFolder(uint8_t folder_number, uint16_t file_number)
   if ((String)(const char *)shift_machine["selected_language"] == "EN")
   {
     folder_number = add_folder_number + folder_number;
-    myDFPlayer.volume(20);
+    myDFPlayer.volume(26);
   }
   else
   {
@@ -245,7 +245,7 @@ void CooltimeMp3()
   if (cooltime_min <= 0)
   {
     Mp3PlayLargeFolder(3, cooltime_sec);
-    delay(1500);
+    delay(1300);
     Mp3PlayLargeFolder(1, 5);
     delay(500);
   }
