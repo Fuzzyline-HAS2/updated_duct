@@ -85,6 +85,7 @@ void CooltimeCalculation()
     }
 }
 
+// 시티 덕트킬
 void TagPlayerSend()
 {
     if ((String)(const char *)my["device_name"] == "BV1" || (String)(const char *)my["device_name"] == "HV1")
@@ -103,7 +104,26 @@ void TagPlayerSend()
         has2wifi.Send("GV2", "tag_player", tag_player_name);
     }
 }
-// TODO 덕트킬 추가
+
+// 배드랜드 덕트킬
+// void TagPlayerSend()
+// {
+//     if((String)(const char*)my["device_name"] == "BV2" || (String)(const char*)my["device_name"] == "HV"){
+//         has2wifi.Send("BV2", "tag_player", tag_player_name);
+//         has2wifi.Send("HV", "tag_player", tag_player_name);
+//     }
+//     else if((String)(const char*)my["device_name"] == "BV1" || (String)(const char*)my["device_name"] == "GV1" || (String)(const char*)my["device_name"] == "OV"){
+//         has2wifi.Send("BV1", "tag_player", tag_player_name);
+//         has2wifi.Send("GV1", "tag_player", tag_player_name);
+//         has2wifi.Send("OV", "tag_player", tag_player_name);
+//     }
+//     else if((String)(const char*)my["device_name"] == "GV2" || (String)(const char*)my["device_name"] == "GV3" || (String)(const char*)my["device_name"] == "FV"){
+//         has2wifi.Send("FV", "tag_player", tag_player_name);
+//         has2wifi.Send("GV2", "tag_player", tag_player_name);
+//         has2wifi.Send("GV3", "tag_player", tag_player_name);
+//     }
+// }
+
 void DuctKill()
 {
     // 가장 최근 태그한 플레이어 정보를 DB에서 가져옴
