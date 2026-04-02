@@ -81,6 +81,12 @@ void DataChange()
         }
     }
 
+    if((String)(const char *)my["device_state"] != (String)(const char *)cur["device_state"]){
+        if((String)(const char *)my["device_state"] == "github"){
+            checkOTA();
+        }
+    }
+
     if((String)(const char *)my["manage_state"] != (String)(const char *)cur["manage_state"]){
         if((String)(const char *)my["manage_state"] == "mo"){
             DuctOpen();

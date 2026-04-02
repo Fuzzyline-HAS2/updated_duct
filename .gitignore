@@ -11,7 +11,13 @@
 *.sln.docstates
 ArduinoOutput/*
 .vscode/*
-*.bin
+
+# 비밀키 (GitHub에 올라가면 안 됨)
+secrets.h
+scripts/secrets.py
+
+# OTA 배포 파일은 제외하지 않음 — 기기가 GitHub Raw로 다운로드해야 함
+# update.bin, update.sig, version.txt → tracked
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
