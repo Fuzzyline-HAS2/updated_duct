@@ -145,14 +145,14 @@ void DuctKill()
             pixels_line.lightColor(purple);
             pixels_round.lightColor(purple);
             delay(500);
-            pixels_line.clear();
-            pixels_round.clear();
+            pixels_line.clear(); pixels_line.show();
+            pixels_round.clear(); pixels_round.show();
             delay(500);
             pixels_line.lightColor(purple);
             pixels_round.lightColor(purple);
             delay(500);
-            pixels_line.clear();
-            pixels_round.clear();
+            pixels_line.clear(); pixels_line.show();
+            pixels_round.clear(); pixels_round.show();
             delay(500);
             if (duct_available)
             {

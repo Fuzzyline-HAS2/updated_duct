@@ -44,7 +44,15 @@ void DuctKill();
 void SensorInit();
 
 //================================ Wifi ==================================
-HAS2_Wifi has2wifi;
+HAS2_Wifi has2wifi("http://172.30.1.43");
+
+SecureOTA ota(
+  "https://raw.githubusercontent.com/Fuzzyline-HAS2/duct/main/update.bin",
+  "https://raw.githubusercontent.com/Fuzzyline-HAS2/duct/main/version.txt",
+  "https://raw.githubusercontent.com/Fuzzyline-HAS2/duct/main/update.sig",
+  HMAC_SECRET,
+  FIRMWARE_VER
+);
 
 bool activate_bool;
 
@@ -58,9 +66,27 @@ void DataChange();
 #define NUMPIXELS_ROUND     6
 #define NUMPIXELS_SWITCH    12
 
-Adafruit_NeoPixel pixels_line(NUMPIXELS_LINE, NEO_LINE, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels_round(NUMPIXELS_ROUND, NEO_ROUND, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels_switch(NUMPIXELS_SWITCH, NEO_SWITCH, NEO_GRB + NEO_KHZ800);
+class NeoPixelExt : public Adafruit_NeoPixel {
+public:
+    NeoPixelExt(uint16_t n, int16_t pin, neoPixelType type) : Adafruit_NeoPixel(n, pin, type) {}
+
+    void lightColor(int color[3]) {
+        fill(Color(color[0], color[1], color[2]));
+        show();
+    }
+
+    void lightColor(int color[3], int count) {
+        clear();
+        for (int i = 0; i < count; i++) {
+            setPixelColor(i, Color(color[0], color[1], color[2]));
+        }
+        show();
+    }
+};
+
+NeoPixelExt pixels_line(NUMPIXELS_LINE, NEO_LINE, NEO_GRB + NEO_KHZ800);
+NeoPixelExt pixels_round(NUMPIXELS_ROUND, NEO_ROUND, NEO_GRB + NEO_KHZ800);
+NeoPixelExt pixels_switch(NUMPIXELS_SWITCH, NEO_SWITCH, NEO_GRB + NEO_KHZ800);
 
 int color_brightness = 20;
 

@@ -17,6 +17,9 @@
 #include <esp_task_wdt.h>
 #include <SimpleTimer.h>
 
+#include <SecureOTA.h>
+#include "secrets.h"
+
 // #define SERIAL1_RX_PIN 36    // 사용X
 // #define SERIAL1_TX_PIN 32    // 사용X   
 
