@@ -34,8 +34,7 @@ void SensorInit()
  */
 void RfidInit()
 {
-RestartPn532:
-  nfc.begin(); // nfc 함수 시작
+  nfc.begin();
   if (!(nfc.getFirmwareVersion()))
   {
     Serial.print("!!!RFID 연결실패!!!");
@@ -44,13 +43,10 @@ RestartPn532:
       has2wifi.Send((String)(const char *)my["device_name"], "device_state", "PN532");
       send_rfid_error = true;
     }
-    goto RestartPn532;
+    return;
   }
-  else
-  {
-    nfc.SAMConfig(); // configure board to read RFID tags
-    Serial.println("RFID 연결성공");
-  }
+  nfc.SAMConfig();
+  Serial.println("RFID 연결성공");
 }
 
 /**
@@ -149,11 +145,9 @@ void Mp3Init()
     Serial.println(F("2.Please insert the SD card!"));
     has2wifi.Send((String)(const char *)my["device_name"], "device_state", "MP3");
     send_mp3_err = true;
+    return;
   }
-  else
-  {
-    Serial.println(F("DFPlayer Mini online."));
-  }
+  Serial.println(F("DFPlayer Mini online."));
   myDFPlayer.setTimeOut(500); // Set serial communictaion time out 500ms
   //----Set volume----
   myDFPlayer.volume(30); // Set volume value (0~30).

@@ -56,15 +56,19 @@ SecureOTA ota(
 
 bool activate_bool;
 
+void UpdateBrightness();
+void ApplyCurrentNeopixel();
 void SettingFunc();
 void ReadyFunc();
 void ActionFunc();
 void DataChange();
 
 //=============================== Neopixel ===============================
-#define NUMPIXELS_LINE      30
-#define NUMPIXELS_ROUND     6
-#define NUMPIXELS_SWITCH    12
+#define NUMPIXELS_LINE           30
+#define NUMPIXELS_ROUND          6
+#define NUMPIXELS_SWITCH         12
+#define DEFAULT_COLOR_BRIGHTNESS 20
+#define DEFAULT_LINE_BRIGHTNESS  100
 
 class NeoPixelExt : public Adafruit_NeoPixel {
 public:
@@ -88,20 +92,21 @@ NeoPixelExt pixels_line(NUMPIXELS_LINE, NEO_LINE, NEO_GRB + NEO_KHZ800);
 NeoPixelExt pixels_round(NUMPIXELS_ROUND, NEO_ROUND, NEO_GRB + NEO_KHZ800);
 NeoPixelExt pixels_switch(NUMPIXELS_SWITCH, NEO_SWITCH, NEO_GRB + NEO_KHZ800);
 
-int color_brightness = 20;
+int color_brightness = DEFAULT_COLOR_BRIGHTNESS;
+int line_brightness  = DEFAULT_LINE_BRIGHTNESS;
 
 // Neopixel 색상정보
-int white[3] = {color_brightness, color_brightness, color_brightness};
-int red[3] = {color_brightness, 0, 0};
-int yellow[3] = {color_brightness, color_brightness, 0};
-int green[3] = {0, color_brightness, 0};
-int purple[3] = {color_brightness, 0, color_brightness};
+int white[3]       = {DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS};
+int red[3]         = {DEFAULT_COLOR_BRIGHTNESS, 0, 0};
+int yellow[3]      = {DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS, 0};
+int green[3]       = {0, DEFAULT_COLOR_BRIGHTNESS, 0};
+int purple[3]      = {DEFAULT_COLOR_BRIGHTNESS, 0, DEFAULT_COLOR_BRIGHTNESS};
 
-int line_white[3] = {100, 100, 100};
-int line_red[3] = {100, 0, 0};
-int line_yellow[3] = {100, 100, 0};
-int line_green[3] = {0, 100, 0};
-int line_purple[3] = {100, 0, 100};
+int line_white[3]  = {DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS};
+int line_red[3]    = {DEFAULT_LINE_BRIGHTNESS, 0, 0};
+int line_yellow[3] = {DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS, 0};
+int line_green[3]  = {0, DEFAULT_LINE_BRIGHTNESS, 0};
+int line_purple[3] = {DEFAULT_LINE_BRIGHTNESS, 0, DEFAULT_LINE_BRIGHTNESS};
 
 //================================ Rfid ==================================
 Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
