@@ -1,5 +1,5 @@
 /**
- * @file duct.ino
+ * @file updated_duct.ino
  * @author YuBin Kim (dbqks56231106@gmail.com)
  * @brief badland 덕트
  * @version 0.0.1
@@ -9,8 +9,8 @@
  * 
  */
 
-#define FIRMWARE_VER 1
-#include "duct.h"
+#define FIRMWARE_VER 2
+#include "updated_duct.h"
 
 //************************************************ Core1 ********************************************************************
 /**
