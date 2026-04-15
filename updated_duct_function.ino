@@ -1,4 +1,4 @@
-#include "duct.h"
+#include "updated_duct.h"
 
 /**
  * @brief 덕트 사용시 동작

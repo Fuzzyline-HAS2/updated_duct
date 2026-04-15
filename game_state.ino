@@ -1,4 +1,4 @@
-#include "duct.h"
+#include "updated_duct.h"
 
 /**
  * @brief 서버의 brightness(0-100 string)를 읽어 색상 배열·밝기 변수를 갱신

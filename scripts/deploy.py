@@ -12,7 +12,7 @@ SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR      = os.path.dirname(SCRIPT_DIR)
 
 # ── 기기 저장소에 맞게 변경 ─────────────────────────────────
-SKETCH_FILE   = os.path.join(BASE_DIR, "duct.ino")  # ← 변경 필요
+SKETCH_FILE   = os.path.join(BASE_DIR, "updated_duct.ino")  # ← 변경 필요
 VERSION_MACRO = "FIRMWARE_VER"
 # ────────────────────────────────────────────────────────────
 
@@ -60,7 +60,7 @@ def find_newest_bin():
     candidates = []
     for pattern in search_patterns:
         candidates.extend(glob.glob(pattern, recursive=True))
-    exclude_keywords = ["update", "merged", "bootloader", "partitions", "boot_app"]
+    exclude_keywords = ["merged", "bootloader", "partitions", "boot_app"]
     candidates = [
         f for f in candidates
         if not any(kw in os.path.basename(f).lower() for kw in exclude_keywords)

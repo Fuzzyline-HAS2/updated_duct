@@ -1,4 +1,4 @@
-#include "duct.h"
+#include "updated_duct.h"
 
 //****************************************** Initialize ******************************************
 void SensorInit()
