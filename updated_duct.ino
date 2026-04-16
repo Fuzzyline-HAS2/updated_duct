@@ -19,7 +19,7 @@
 void DuctInit()
 {
   Serial.begin(115200);
-  has2wifi.Setup("badland_ruins", "Code3824@");
+  has2wifi.Setup("badland");
   ota.setLogStream(Serial);
   ota.setOnSuccess([]() {
     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
