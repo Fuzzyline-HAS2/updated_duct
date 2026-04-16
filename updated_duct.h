@@ -44,7 +44,7 @@ void DuctKill();
 void SensorInit();
 
 //================================ Wifi ==================================
-HAS2_Wifi has2wifi("http://172.30.1.43");
+HAS2_Wifi has2wifi("http://172.30.1.44");
 
 SecureOTA ota(
   "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/update.bin",
@@ -120,7 +120,7 @@ void CardChecking(uint8_t rfidData[32]);
 
 //================================ Mp3 ===================================
 DFRobotDFPlayerMini myDFPlayer;
-bool send_mp3_err;  // MP3 모듈이 고장났을 때 메인프로그램으로 에러 상황을 보냈는지 확인하는 변수
+bool mp3_available = false;
 bool mp3_cool;
 bool mp3_open;
 
