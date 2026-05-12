@@ -67,8 +67,8 @@ void DataChange();
 #define NUMPIXELS_LINE           30
 #define NUMPIXELS_ROUND          6
 #define NUMPIXELS_SWITCH         12
-#define DEFAULT_COLOR_BRIGHTNESS 20
-#define DEFAULT_LINE_BRIGHTNESS  100
+#define DEFAULT_COLOR_BRIGHTNESS 50
+#define DEFAULT_LINE_BRIGHTNESS  50
 
 class NeoPixelExt : public Adafruit_NeoPixel {
 public:
@@ -92,21 +92,21 @@ NeoPixelExt pixels_line(NUMPIXELS_LINE, NEO_LINE, NEO_GRB + NEO_KHZ800);
 NeoPixelExt pixels_round(NUMPIXELS_ROUND, NEO_ROUND, NEO_GRB + NEO_KHZ800);
 NeoPixelExt pixels_switch(NUMPIXELS_SWITCH, NEO_SWITCH, NEO_GRB + NEO_KHZ800);
 
-int color_brightness = DEFAULT_COLOR_BRIGHTNESS;
-int line_brightness  = DEFAULT_LINE_BRIGHTNESS;
+int colorBrightness = DEFAULT_COLOR_BRIGHTNESS;
+int lineBrightness  = DEFAULT_LINE_BRIGHTNESS;
 
 // Neopixel 색상정보
-int white[3]       = {DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS};
-int red[3]         = {DEFAULT_COLOR_BRIGHTNESS, 0, 0};
-int yellow[3]      = {DEFAULT_COLOR_BRIGHTNESS, DEFAULT_COLOR_BRIGHTNESS, 0};
-int green[3]       = {0, DEFAULT_COLOR_BRIGHTNESS, 0};
-int purple[3]      = {DEFAULT_COLOR_BRIGHTNESS, 0, DEFAULT_COLOR_BRIGHTNESS};
+int white[3]       = {255, 255, 255};
+int red[3]         = {255, 0,   0  };
+int yellow[3]      = {255, 255, 0  };
+int green[3]       = {0,   255, 0  };
+int purple[3]      = {255, 0,   255};
 
-int line_white[3]  = {DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS};
-int line_red[3]    = {DEFAULT_LINE_BRIGHTNESS, 0, 0};
-int line_yellow[3] = {DEFAULT_LINE_BRIGHTNESS, DEFAULT_LINE_BRIGHTNESS, 0};
-int line_green[3]  = {0, DEFAULT_LINE_BRIGHTNESS, 0};
-int line_purple[3] = {DEFAULT_LINE_BRIGHTNESS, 0, DEFAULT_LINE_BRIGHTNESS};
+int line_white[3]  = {255, 255, 255};
+int line_red[3]    = {255, 0,   0  };
+int line_yellow[3] = {255, 255, 0  };
+int line_green[3]  = {0,   255, 0  };
+int line_purple[3] = {255, 0,   255};
 
 //================================ Rfid ==================================
 Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);

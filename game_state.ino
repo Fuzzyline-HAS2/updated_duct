@@ -1,32 +1,18 @@
 #include "updated_duct.h"
 
-/**
- * @brief 서버의 brightness(0-100 string)를 읽어 색상 배열·밝기 변수를 갱신
- *        0 또는 100 초과 수신 시 기본값 복원
- */
 void UpdateBrightness()
 {
-    int val = ((String)(const char *)my["brightness"]).toInt();
-
-    if (val <= 0 || val > 100) {
-        color_brightness = DEFAULT_COLOR_BRIGHTNESS;
-        line_brightness  = DEFAULT_LINE_BRIGHTNESS;
+    int serverBrightness = my["brightness"].as<int>();
+    if (serverBrightness <= 0 || serverBrightness > 100) {
+        colorBrightness = DEFAULT_COLOR_BRIGHTNESS;
+        lineBrightness  = DEFAULT_LINE_BRIGHTNESS;
     } else {
-        color_brightness = map(val, 1, 100, 1, 255);
-        line_brightness  = map(val, 1, 100, 1, 255);
+        colorBrightness = map(serverBrightness, 1, 100, 1, 255);
+        lineBrightness  = map(serverBrightness, 1, 100, 1, 255);
     }
-
-    white[0]  = color_brightness; white[1]  = color_brightness; white[2]  = color_brightness;
-    red[0]    = color_brightness; red[1]    = 0;                red[2]    = 0;
-    yellow[0] = color_brightness; yellow[1] = color_brightness; yellow[2] = 0;
-    green[0]  = 0;                green[1]  = color_brightness; green[2]  = 0;
-    purple[0] = color_brightness; purple[1] = 0;                purple[2] = color_brightness;
-
-    line_white[0]  = line_brightness; line_white[1]  = line_brightness; line_white[2]  = line_brightness;
-    line_red[0]    = line_brightness; line_red[1]    = 0;               line_red[2]    = 0;
-    line_yellow[0] = line_brightness; line_yellow[1] = line_brightness; line_yellow[2] = 0;
-    line_green[0]  = 0;               line_green[1]  = line_brightness; line_green[2]  = 0;
-    line_purple[0] = line_brightness; line_purple[1] = 0;               line_purple[2] = line_brightness;
+    pixels_line.setBrightness(lineBrightness);
+    pixels_round.setBrightness(colorBrightness);
+    pixels_switch.setBrightness(colorBrightness);
 }
 
 /**

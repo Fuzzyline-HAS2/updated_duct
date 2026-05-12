@@ -19,6 +19,9 @@ void SensorInit()
   pixels_line.begin();
   pixels_round.begin();
   pixels_switch.begin();
+  pixels_line.setBrightness(lineBrightness);
+  pixels_round.setBrightness(colorBrightness);
+  pixels_switch.setBrightness(colorBrightness);
 
   // Rfid init
   RfidInit();
@@ -104,7 +107,7 @@ void CardChecking(uint8_t rfidData[32]) // 어떤 카드가 들어왔는지 확�
     // 1. 태그한 플레이어의 역할과 생명칩갯수, 최대생명칩갯수 등 읽어오기
     has2wifi.Receive(tagUser);
     // 2. 술래인지, 플레이어인지 구분
-    if ((String)(const char *)tag["role"] == "player" || (String)(const char *)tag["role"] == "revival"|| (String)(const char *)tag["role"] == "ghost")
+    if ((String)(const char *)tag["role"] == "player" || (String)(const char *)tag["role"] == "revival" || (String)(const char *)tag["role"] == "ghost")
     {
       DuctTag(tagUser);
     }
