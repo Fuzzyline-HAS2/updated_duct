@@ -44,7 +44,7 @@ void DuctKill();
 void SensorInit();
 
 //================================ Wifi ==================================
-HAS2_Wifi has2wifi("http://172.30.1.44");
+HAS2_Wifi has2wifi("http://172.30.1.43");
 
 SecureOTA ota(
   "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/update.bin",

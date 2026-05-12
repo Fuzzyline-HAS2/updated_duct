@@ -9,7 +9,7 @@
  * 
  */
 
-#define FIRMWARE_VER 6
+#define FIRMWARE_VER 5
 #include "updated_duct.h"
 
 //************************************************ Core1 ********************************************************************
@@ -19,7 +19,7 @@
 void DuctInit()
 {
   Serial.begin(115200);
-  has2wifi.Setup("badland");
+  has2wifi.Setup("badland_ruins", "Code3824@");
   ota.setLogStream(Serial);
   ota.setOnSuccess([]() {
     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
