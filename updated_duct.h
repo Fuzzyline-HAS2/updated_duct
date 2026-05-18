@@ -1,4 +1,4 @@
-﻿#ifndef _UPDATED_DUCT_H_
+#ifndef _UPDATED_DUCT_H_
 #define _UPDATED_DUCT_H_
 
 #include "library_and_pin.h"
@@ -44,7 +44,7 @@ void DuctKill();
 void SensorInit();
 
 //================================ Wifi ==================================
-HAS2_Wifi has2wifi("http://172.30.1.1");
+HAS2_Wifi has2wifi("http://172.30.1.43");
 
 SecureOTA ota(
   "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/update.bin",
