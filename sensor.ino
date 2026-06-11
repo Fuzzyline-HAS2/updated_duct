@@ -57,6 +57,7 @@ void RfidInit()
  */
 void RfidLoop()
 {
+  if (tagger_mode) return;   // "이로운 효과" 동결 중 RFID(pn532) 비활성
   if (!rfid_tag)
   {
     rfid_tag = true;

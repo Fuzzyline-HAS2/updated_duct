@@ -112,35 +112,71 @@ void DataChange()
 {
     static StaticJsonDocument<1000> cur;
 
-    if ((String)(const char *)my["game_state"] != (String)(const char *)cur["game_state"]){
-        if ((String)(const char *)my["game_state"] == "setting"){
-            SettingFunc();
-        }
-        else if ((String)(const char *)my["game_state"] == "ready"){
-            ReadyFunc();
-        }
-        else if ((String)(const char *)my["game_state"] == "activate"){
-            ActivateRunOnce();
-        }
-    }
-
+    // device_state 분기는 항상 처리 (tagger 동결 중에도 back 수신을 감지해야 함)
     if((String)(const char *)my["device_state"] != (String)(const char *)cur["device_state"]){
         if((String)(const char *)my["device_state"] == "github"){
             ota.check();
         }
-    }
-
-    if((String)(const char *)my["manage_state"] != (String)(const char *)cur["manage_state"]){
-        if((String)(const char *)my["manage_state"] == "mo"){
-            DuctOpen();
+        else if((String)(const char *)my["device_state"] == "tagger"){
+            EnterTaggerMode();
+        }
+        else if((String)(const char *)my["device_state"] == "back"){
+            ExitTaggerMode();
         }
     }
 
-    if((String)(const char *)my["brightness"] != (String)(const char *)cur["brightness"]){
-        UpdateBrightness();
-        ApplyCurrentNeopixel();
+    // 아래 분기들은 tagger 동결 중에는 무시 (game_state/cool_time 보존)
+    if(!tagger_mode){
+        if ((String)(const char *)my["game_state"] != (String)(const char *)cur["game_state"]){
+            if ((String)(const char *)my["game_state"] == "setting"){
+                SettingFunc();
+            }
+            else if ((String)(const char *)my["game_state"] == "ready"){
+                ReadyFunc();
+            }
+            else if ((String)(const char *)my["game_state"] == "activate"){
+                ActivateRunOnce();
+            }
+        }
+
+        if((String)(const char *)my["manage_state"] != (String)(const char *)cur["manage_state"]){
+            if((String)(const char *)my["manage_state"] == "mo"){
+                DuctOpen();
+            }
+        }
+
+        if((String)(const char *)my["brightness"] != (String)(const char *)cur["brightness"]){
+            UpdateBrightness();
+            ApplyCurrentNeopixel();
+        }
     }
 
     Serial.println("Data Change");
     cur = my;
+}
+
+/**
+ * @brief "이로운 효과" 진입 - tagger 수신 시 현 상태와 무관하게 덕트를 동결
+ *        (전체 보라색, RFID 비활성, 쿨타임 일시정지). game_state/cool_time은 손대지 않아 보존됨.
+ */
+void EnterTaggerMode()
+{
+    if (tagger_mode) return;   // 재진입 방지 (tagger -> activate -> tagger 등)
+    tagger_mode = true;        // RfidLoop / CooltimeTimerFunc 자동 정지
+    pixels_line.lightColor(line_purple);
+    pixels_round.lightColor(purple);
+    pixels_switch.lightColor(purple);
+    Serial.println("Enter Tagger Mode");
+}
+
+/**
+ * @brief "이로운 효과" 해제 - back 수신 시 동결을 풀고 원래 game_state 색상으로 복귀.
+ *        값들은 동결 중 변하지 않았으므로 별도 복원 없이 재페인트만 수행 (서버 전송 없음).
+ */
+void ExitTaggerMode()
+{
+    if (!tagger_mode) return;  // tagger 상태일 때만 동작
+    tagger_mode = false;       // RFID / 쿨타임 게이팅 해제 (멈췄던 지점부터 재개)
+    ApplyCurrentNeopixel();    // 복원된 game_state / duct_available 기준 색 복원
+    Serial.println("Exit Tagger Mode");
 }

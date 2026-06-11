@@ -14,6 +14,7 @@ void TimerRun()
 
 void CooltimeTimerFunc()
 {
+    if(tagger_mode) return;   // "이로운 효과" 동결 중 쿨타임 일시정지 (current_time/cooltime 보존)
     if(current_time >= cooltime){
         pixels_line.lightColor(line_yellow);
         pixels_round.lightColor(yellow);
