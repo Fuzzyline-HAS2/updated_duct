@@ -120,7 +120,13 @@ void DuctKill()
             pixels_line.clear(); pixels_line.show();
             pixels_round.clear(); pixels_round.show();
             delay(500);
-            if (duct_available)
+            if (tagger_mode)
+            {   // "이로운 효과" 동결 중이면 kill 후에도 보라색 freeze 외관 유지
+                pixels_line.lightColor(line_purple);
+                pixels_round.lightColor(purple);
+                pixels_switch.lightColor(purple);
+            }
+            else if (duct_available)
             {
                 pixels_line.lightColor(line_yellow);
                 pixels_round.lightColor(yellow);
