@@ -10,6 +10,7 @@
  */
 
 #define FIRMWARE_VER 15
+#define PARTITION_VER 1
 #include "updated_duct.h"
 
 //************************************************ Core1 ********************************************************************
@@ -27,6 +28,12 @@ void DuctInit()
   ota.setOnSkip([]() {
     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
   });
+    ota.setPartitionUpdate(
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/partitions.bin",
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/partitions.sig",
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/updated_duct/main/partition_version.txt",
+        PARTITION_VER
+    );
   SensorInit();
   DataChange();
   TimerInit();
