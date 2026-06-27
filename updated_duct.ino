@@ -9,7 +9,7 @@
  * 
  */
 
-#define FIRMWARE_VER 15
+#define FIRMWARE_VER 17
 #define PARTITION_VER 1
 #include "updated_duct.h"
 
@@ -21,6 +21,8 @@ void DuctInit()
 {
   Serial.begin(115200);
   has2wifi.Setup("badland");
+  // 부팅 시 현재 펌웨어 버전을 서버(esp_version)로 전송
+  has2wifi.Send((String)(const char*)my["device_name"], "esp_version", String(FIRMWARE_VER));
   ota.setLogStream(Serial);
   ota.setOnSuccess([]() {
     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
