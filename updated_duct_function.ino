@@ -138,8 +138,8 @@ void DuctKill()
                 pixels_line.lightColor(line_red);
             }
 
-            // 생명칩 차감, 역할 변경(revival/ghost), 술래 보상은 서버 duct_kill 핸들러가 일괄 처리
-            has2wifi.Situation(kill_player, "duct_kill", tagger_name);
+            // 글러브 태그와 동일하게 서버 taken 핸들러가 일괄 처리 (key=피해자, value=술래)
+            has2wifi.Situation(tagger_name, "taken", kill_player);
 
             cool_time_neo_bool = true;
         }
