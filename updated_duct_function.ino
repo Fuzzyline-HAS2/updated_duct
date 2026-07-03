@@ -138,8 +138,8 @@ void DuctKill()
                 pixels_line.lightColor(line_red);
             }
 
-            // 글러브 태그와 동일하게 서버 taken 핸들러가 일괄 처리 (key=피해자, value=술래)
-            has2wifi.Situation(tagger_name, "taken", kill_player);
+            // 서버 taken 핸들러가 일괄 처리 (key=술래, value=피해자)
+            has2wifi.Situation(kill_player, "taken", tagger_name);
 
             cool_time_neo_bool = true;
         }
