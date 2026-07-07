@@ -9,7 +9,7 @@
  * 
  */
 
-#define FIRMWARE_VER 17
+#define FIRMWARE_VER 18
 #define PARTITION_VER 1
 #include "updated_duct.h"
 
