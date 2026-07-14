@@ -124,6 +124,9 @@ void DataChange()
         else if((String)(const char *)my["device_state"] == "back"){
             ExitTaggerMode();
         }
+        else if((String)(const char *)my["device_state"] == "open"){
+            MmmmOpen();
+        }
     }
 
     // 아래 분기들은 tagger 동결 중에는 무시 (game_state/cool_time 보존)
