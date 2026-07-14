@@ -19,6 +19,12 @@ GameState game_state = setting;
 bool cool_time_neo_bool = true;
 bool duct_kill_bool;
 bool tagger_mode = false;   // "이로운 효과" - tagger 수신 시 덕트 동결(보라색+RFID off), back 시 원복
+
+bool mmmm_open = false;
+bool mmmm_prev_duct_available = false;
+bool mmmm_prev_cooltime_running = false;
+int mmmm_prev_current_time = 0;
+bool mmmm_prev_cool_time_neo_bool = false;
 //============================ Hardware Serial ============================
 // HardwareSerial MySerial1(1); // 사용X
 HardwareSerial MySerial2(2);    // MP3
@@ -37,6 +43,8 @@ void CooltimeCalculation();
 void CooltimeMp3();
 void TagPlayerSend();
 void DuctKill();
+void MmmmOpen();
+void MmmmClose();
 
 //*=============================== Sensor ===============================*
 /**

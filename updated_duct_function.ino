@@ -138,10 +138,62 @@ void DuctKill()
                 pixels_line.lightColor(line_red);
             }
 
-            // 서버 taken 핸들러가 일괄 처리 (key=술래, value=피해자)
-            has2wifi.Situation(kill_player, "taken", tagger_name);
+            // 서버 taken 핸들러 규칙: value=술래(tagger), key=피해자(생존자)
+            // (Situation(arg1→value, table, arg3→key) 순서. arg1에 술래, arg3에 생존자)
+            has2wifi.Situation(tagger_name, "taken", kill_player);
 
             cool_time_neo_bool = true;
         }
+    }
+}
+
+void MmmmOpen()
+{
+    if (mmmm_open) return;
+    mmmm_open = true;
+
+    mmmm_prev_duct_available     = duct_available;
+    mmmm_prev_cooltime_running   = cooltime_timer.isEnabled(cooltime_timer_id);
+    mmmm_prev_current_time       = current_time;
+    mmmm_prev_cool_time_neo_bool = cool_time_neo_bool;
+
+    if (mmmm_prev_cooltime_running)
+        cooltime_timer.deleteTimer(cooltime_timer_id);
+
+    switch_available = false;
+    duct_available   = false;
+    Mp3PlayLargeFolder(1, 2);
+    pixels_line.lightColor(line_red);
+    pixels_switch.lightColor(red);
+    pixels_round.lightColor(red);
+    digitalWrite(RELAY_PIN, HIGH);
+    duct_close_timer_id = duct_close_timer.setTimeout(4000, MmmmClose);
+}
+
+void MmmmClose()
+{
+    digitalWrite(RELAY_PIN, LOW);
+    mmmm_open        = false;
+    switch_available = true;
+
+    if (mmmm_prev_duct_available)
+    {
+        duct_available    = true;
+        cool_time_neo_bool = false;
+        pixels_line.lightColor(line_yellow);
+        pixels_round.lightColor(yellow);
+        pixels_switch.lightColor(yellow);
+    }
+    else
+    {
+        duct_available    = false;
+        current_time      = mmmm_prev_current_time;
+        cool_time_neo_bool = mmmm_prev_cool_time_neo_bool;
+        pixels_line.clear();
+        pixels_line.lightColor(line_red, NUMPIXELS_LINE * (cooltime - current_time) / cooltime);
+        pixels_switch.lightColor(yellow);
+        if (mmmm_prev_cooltime_running)
+            cooltime_timer_id = cooltime_timer.setInterval(1000, CooltimeTimerFunc);
+        has2wifi.Send((String)(const char *)my["device_name"], "device_state", "lock");
     }
 }

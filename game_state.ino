@@ -36,6 +36,7 @@ void ApplyCurrentNeopixel()
         } else {
             pixels_line.lightColor(line_red);
             pixels_round.lightColor(red);
+            pixels_switch.lightColor(yellow);
         }
     }
 }
@@ -179,4 +180,12 @@ void ExitTaggerMode()
     tagger_mode = false;       // RFID / 쿨타임 게이팅 해제 (멈췄던 지점부터 재개)
     ApplyCurrentNeopixel();    // 복원된 game_state / duct_available 기준 색 복원
     Serial.println("Exit Tagger Mode");
+
+    if (game_state == activate)
+    {
+        if (duct_available)
+            has2wifi.Send((String)(const char *)my["device_name"], "device_state", "activate");
+        else
+            has2wifi.Send((String)(const char *)my["device_name"], "device_state", "lock");
+    }
 }
